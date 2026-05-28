@@ -6,7 +6,9 @@ import { CreatorEventMatch } from '../creator-events/entities/creator-event-matc
 import { CreatorEvent } from '../creator-events/entities/creator-event.entity';
 import { ListPendingMatchesQueryDto } from './dto/list-pending-matches-query.dto';
 
-type MockRepo = jest.Mocked<Pick<Repository<any>, 'findOne' | 'createQueryBuilder' | 'find' | 'findByIds'>>;
+type MockRepo = jest.Mocked<
+  Pick<Repository<any>, 'findOne' | 'createQueryBuilder' | 'find' | 'findByIds'>
+>;
 
 function createMockQueryBuilder(returnValue: any): any {
   return {
@@ -95,10 +97,18 @@ describe('OracleService', () => {
       matchRepo.createQueryBuilder.mockReturnValue(qb);
       eventRepo.find.mockResolvedValue([mockEvent]);
 
-      const result = await service.getPendingMatches(new ListPendingMatchesQueryDto());
+      const result = await service.getPendingMatches(
+        new ListPendingMatchesQueryDto(),
+      );
 
-      expect(qb.where).toHaveBeenCalledWith('m.match_time < :now', expect.any(Object));
-      expect(qb.andWhere).toHaveBeenCalledWith('m.result_submitted = :submitted', { submitted: false });
+      expect(qb.where).toHaveBeenCalledWith(
+        'm.match_time < :now',
+        expect.any(Object),
+      );
+      expect(qb.andWhere).toHaveBeenCalledWith(
+        'm.result_submitted = :submitted',
+        { submitted: false },
+      );
       expect(result.data).toHaveLength(2);
       expect(result.total).toBe(2);
     });
@@ -107,7 +117,9 @@ describe('OracleService', () => {
       const qb = createMockQueryBuilder([[], 0]);
       matchRepo.createQueryBuilder.mockReturnValue(qb);
 
-      const result = await service.getPendingMatches(new ListPendingMatchesQueryDto());
+      const result = await service.getPendingMatches(
+        new ListPendingMatchesQueryDto(),
+      );
 
       expect(result.data).toHaveLength(0);
       expect(result.total).toBe(0);
@@ -128,7 +140,9 @@ describe('OracleService', () => {
       matchRepo.createQueryBuilder.mockReturnValue(qb);
       eventRepo.find.mockResolvedValue([mockEvent]);
 
-      const result = await service.getPendingMatches(new ListPendingMatchesQueryDto());
+      const result = await service.getPendingMatches(
+        new ListPendingMatchesQueryDto(),
+      );
 
       expect(result.data[0].event.title).toBe('World Cup Final');
       expect(result.data[0].event.creator_address).toBe('GCREATOR');
@@ -141,9 +155,13 @@ describe('OracleService', () => {
       matchRepo.createQueryBuilder.mockReturnValue(qb);
       eventRepo.find.mockResolvedValue([mockEvent]);
 
-      const result = await service.getPendingMatches(new ListPendingMatchesQueryDto());
+      const result = await service.getPendingMatches(
+        new ListPendingMatchesQueryDto(),
+      );
 
-      expect(result.data[0].time_since_match_started_seconds).toBeGreaterThan(0);
+      expect(result.data[0].time_since_match_started_seconds).toBeGreaterThan(
+        0,
+      );
     });
 
     it('should handle pagination', async () => {

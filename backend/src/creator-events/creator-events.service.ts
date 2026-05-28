@@ -44,7 +44,12 @@ export class CreatorEventsService {
     }
 
     if (!event.winners_verified) {
-      return { data: [], total: 0, page: query.page ?? 1, limit: query.limit ?? 20 };
+      return {
+        data: [],
+        total: 0,
+        page: query.page ?? 1,
+        limit: query.limit ?? 20,
+      };
     }
 
     const page = query.page ?? 1;
@@ -108,13 +113,22 @@ export class CreatorEventsService {
     const rawResults = await qb.getRawMany();
     const totalResult = await qb.getCount();
 
+    // Define proper type for rawResults to avoid any
+    type RawResult = {
+      user_address: string;
+      total_predictions: string;
+      correct_predictions: string;
+      last_prediction_time: Date | null;
+    };
+    const typedResults = rawResults as RawResult[];
+
     const winners = await this.winnerRepository.find({
       where: { event_id: eventId },
       select: ['user_address'],
     });
     const winnerAddresses = new Set(winners.map((w) => w.user_address));
 
-    const data: LeaderboardEntryResponse[] = rawResults.map((row, index) => {
+    const data: LeaderboardEntryResponse[] = typedResults.map((row, index) => {
       const totalPredictions = Number(row.total_predictions);
       const correctPredictions = Number(row.correct_predictions);
       const accuracyPercentage =

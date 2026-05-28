@@ -29,7 +29,12 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .addApiKey(
-      { type: 'apiKey', name: 'x-api-key', in: 'header', description: 'Oracle API key' },
+      {
+        type: 'apiKey',
+        name: 'x-api-key',
+        in: 'header',
+        description: 'Oracle API key',
+      },
       'api-key',
     )
     .build();

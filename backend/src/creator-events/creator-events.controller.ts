@@ -1,17 +1,6 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBearerAuth,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreatorEventsService } from './creator-events.service';
 import {
   WinnersQueryDto,
@@ -26,15 +15,15 @@ import { Public } from '../common/decorators/public.decorator';
 @ApiTags('Creator Events')
 @Controller('creator-events')
 export class CreatorEventsController {
-  constructor(
-    private readonly creatorEventsService: CreatorEventsService,
-  ) {}
+  constructor(private readonly creatorEventsService: CreatorEventsService) {}
 
   @Get(':id/winners')
   @Public()
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(300)
-  @ApiOperation({ summary: 'Get winners (users with perfect predictions) for an event' })
+  @ApiOperation({
+    summary: 'Get winners (users with perfect predictions) for an event',
+  })
   @ApiResponse({
     status: 200,
     description: 'Paginated list of winners sorted by completion time',

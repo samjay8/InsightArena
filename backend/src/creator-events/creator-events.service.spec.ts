@@ -10,7 +10,9 @@ import { CreatorEventWinner } from './entities/creator-event-winner.entity';
 import { WinnersQueryDto } from './dto/winners-query.dto';
 import { LeaderboardQueryDto } from './dto/leaderboard-query.dto';
 
-type MockRepo = jest.Mocked<Pick<Repository<any>, 'findOne' | 'createQueryBuilder' | 'find' | 'findByIds'>>;
+type MockRepo = jest.Mocked<
+  Pick<Repository<any>, 'findOne' | 'createQueryBuilder' | 'find' | 'findByIds'>
+>;
 
 function createMockQueryBuilder(returnValue: any): any {
   return {
@@ -103,8 +105,14 @@ describe('CreatorEventsService', () => {
         CreatorEventsService,
         { provide: getRepositoryToken(CreatorEvent), useValue: eventRepo },
         { provide: getRepositoryToken(CreatorEventMatch), useValue: matchRepo },
-        { provide: getRepositoryToken(CreatorEventPrediction), useValue: predictionRepo },
-        { provide: getRepositoryToken(CreatorEventWinner), useValue: winnerRepo },
+        {
+          provide: getRepositoryToken(CreatorEventPrediction),
+          useValue: predictionRepo,
+        },
+        {
+          provide: getRepositoryToken(CreatorEventWinner),
+          useValue: winnerRepo,
+        },
       ],
     }).compile();
 
@@ -121,7 +129,10 @@ describe('CreatorEventsService', () => {
     });
 
     it('should return empty data when winners are not verified', async () => {
-      eventRepo.findOne.mockResolvedValue({ ...mockEvent, winners_verified: false });
+      eventRepo.findOne.mockResolvedValue({
+        ...mockEvent,
+        winners_verified: false,
+      });
 
       const result = await service.getWinners('event-1', new WinnersQueryDto());
 
@@ -166,7 +177,10 @@ describe('CreatorEventsService', () => {
       const qb = createMockQueryBuilder([mockWinners, 2]);
       winnerRepo.createQueryBuilder.mockReturnValue(qb);
 
-      const result = await service.getWinners('event-1', { page: 1, limit: 10 });
+      const result = await service.getWinners('event-1', {
+        page: 1,
+        limit: 10,
+      });
 
       expect(qb.skip).toHaveBeenCalledWith(0);
       expect(qb.take).toHaveBeenCalledWith(10);
@@ -205,7 +219,10 @@ describe('CreatorEventsService', () => {
       predictionRepo.createQueryBuilder.mockReturnValue(qb);
       winnerRepo.find.mockResolvedValue([mockWinners[0]]);
 
-      const result = await service.getLeaderboard('event-1', new LeaderboardQueryDto());
+      const result = await service.getLeaderboard(
+        'event-1',
+        new LeaderboardQueryDto(),
+      );
 
       expect(result.data).toHaveLength(2);
       expect(result.data[0].user_address).toBe('GUSER1');
@@ -221,12 +238,15 @@ describe('CreatorEventsService', () => {
       const qb = createMockQueryBuilder([mockRawResults, 2]);
       predictionRepo.createQueryBuilder.mockReturnValue(qb);
 
-      await service.getLeaderboard('event-1', { page: 1, limit: 20, minPredictions: 5 });
+      await service.getLeaderboard('event-1', {
+        page: 1,
+        limit: 20,
+        minPredictions: 5,
+      });
 
-      expect(qb.having).toHaveBeenCalledWith(
-        'COUNT(p.id) >= :minPredictions',
-        { minPredictions: 5 },
-      );
+      expect(qb.having).toHaveBeenCalledWith('COUNT(p.id) >= :minPredictions', {
+        minPredictions: 5,
+      });
     });
 
     it('should sort by correct predictions desc, total predictions desc, completion time asc', async () => {
@@ -248,7 +268,10 @@ describe('CreatorEventsService', () => {
       predictionRepo.createQueryBuilder.mockReturnValue(qb);
       winnerRepo.find.mockResolvedValue([]);
 
-      const result = await service.getLeaderboard('event-1', new LeaderboardQueryDto());
+      const result = await service.getLeaderboard(
+        'event-1',
+        new LeaderboardQueryDto(),
+      );
 
       expect(result.data).toHaveLength(0);
       expect(result.total).toBe(0);
@@ -260,7 +283,10 @@ describe('CreatorEventsService', () => {
       predictionRepo.createQueryBuilder.mockReturnValue(qb);
       winnerRepo.find.mockResolvedValue([]);
 
-      const result = await service.getLeaderboard('event-1', { page: 1, limit: 5 });
+      const result = await service.getLeaderboard('event-1', {
+        page: 1,
+        limit: 5,
+      });
 
       expect(qb.skip).toHaveBeenCalledWith(0);
       expect(qb.take).toHaveBeenCalledWith(5);
