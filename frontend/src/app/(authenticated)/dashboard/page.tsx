@@ -141,30 +141,6 @@ export default function DashboardPage() {
 
         <div className="space-y-6">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-white font-semibold">Quick Actions</h3>
-            <div className="mt-4 grid grid-cols-1 gap-3">
-              <Link
-                href="/markets"
-                className="rounded-xl bg-orange-500 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-orange-500/90"
-              >
-                Browse Markets
-              </Link>
-              <Link
-                href="/leaderboards"
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-center text-sm font-semibold text-gray-200 transition hover:bg-white/10"
-              >
-                View Leaderboard
-              </Link>
-              <Link
-                href="/competitions"
-                className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-center text-sm font-semibold text-orange-400 transition hover:bg-orange-500/20"
-              >
-                Join Competition
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <h3 className="text-white font-semibold">Upcoming Resolutions</h3>
             <div className="mt-4 space-y-3">
               {upcomingResolutions.map((market) => (
