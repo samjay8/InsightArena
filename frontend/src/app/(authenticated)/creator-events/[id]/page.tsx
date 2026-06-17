@@ -25,13 +25,48 @@ import { cn } from "@/lib/utils";
 
 const fallbackParticipants: Record<string, Participant[]> = {
   "event-002": [
-    { address: "GALP2...Z91Q", joinedAt: "2026-05-06T14:30:00Z", score: 3 },
-    { address: "GC7RB...1KYV", joinedAt: "2026-05-06T15:05:00Z", score: 3 },
-    { address: "GDL9N...8TWF", joinedAt: "2026-05-07T09:45:00Z", score: 2 },
+    {
+      address: "GALP2...Z91Q",
+      joinedAt: "2026-05-06T14:30:00Z",
+      score: 3,
+      predictions: 3,
+      correctPredictions: 3,
+      pointsEarned: 300,
+    },
+    {
+      address: "GC7RB...1KYV",
+      joinedAt: "2026-05-06T15:05:00Z",
+      score: 3,
+      predictions: 3,
+      correctPredictions: 3,
+      pointsEarned: 300,
+    },
+    {
+      address: "GDL9N...8TWF",
+      joinedAt: "2026-05-07T09:45:00Z",
+      score: 2,
+      predictions: 3,
+      correctPredictions: 2,
+      pointsEarned: 200,
+    },
   ],
   "event-003": [
-    { address: "GB82Q...HJ4X", joinedAt: "2026-05-22T12:10:00Z", score: 1 },
-    { address: "GCN65...P0LR", joinedAt: "2026-05-23T08:20:00Z", score: 0 },
+    {
+      address: "GB82Q...HJ4X",
+      joinedAt: "2026-05-22T12:10:00Z",
+      score: 1,
+      predictions: 1,
+      correctPredictions: 1,
+      pointsEarned: 100,
+    },
+    {
+      address: "GCN65...P0LR",
+      joinedAt: "2026-05-23T08:20:00Z",
+      score: 0,
+      predictions: 1,
+      correctPredictions: 0,
+      pointsEarned: 0,
+    },
   ],
 };
 
