@@ -35,7 +35,7 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
 
   // Constants for points (as defined in creator-event-manager smart contract)
   const POINTS_RESULT = 1;
-  const POINTS_TOTAL_EXACT = 4;
+  const POINTS_EXACT_BONUS = 3;
 
   const multiplier = match?.pointsMultiplier || 1;
   
@@ -166,11 +166,11 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
                       <div className="space-y-2 pt-3 border-t border-slate-200/60">
                         <div className="flex justify-between text-sm">
                           <span className="text-slate-600">Correct 1X2 Result</span>
-                          <span className="font-bold text-slate-900">+{POINTS_RESULT * multiplier} pts</span>
+                          <span className="font-bold text-indigo-600">+{POINTS_RESULT * multiplier} pts</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-slate-600">Exact Score Bonus</span>
-                          <span className="font-bold text-slate-900">+{POINTS_TOTAL_EXACT * multiplier} pts</span>
+                          <span className="text-slate-600">Exact Score (Total)</span>
+                          <span className="font-bold text-emerald-600">+{(POINTS_RESULT + POINTS_EXACT_BONUS) * multiplier} pts</span>
                         </div>
                       </div>
                     </div>
